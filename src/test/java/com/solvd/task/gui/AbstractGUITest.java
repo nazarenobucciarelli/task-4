@@ -12,11 +12,7 @@ import java.time.LocalDateTime;
 
 public abstract class AbstractGUITest implements IGUITest{
 
-    private static final ThreadLocal<WebDriver> driverThreadLocal = ThreadLocal.withInitial(() -> {
-        String driverPath = System.getProperty("user.dir") + "/src/test/resources/chromedriver";
-        System.setProperty("webdriver.chrome.driver", driverPath);
-        return new ChromeDriver();
-    });
+    private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
 
     public WebDriver getDriver() {
         return driverThreadLocal.get();

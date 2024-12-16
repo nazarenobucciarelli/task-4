@@ -22,11 +22,11 @@ public class SearchResultsSideBar extends AbstractComponent {
             List<WebElement> checkBoxes = filterGroups.get(0).findElements(By.cssSelector("a"));
             int randomIndex = new Random().nextInt(checkBoxes.size());
             WebElement checkBox = checkBoxes.get(randomIndex);
-            String value = checkBox.getAttribute("href");
-            String brandName = checkBox.findElement(By.cssSelector("input[aria-label]")).getAttribute("aria-label");
+            String value = checkBox.getDomProperty("href");
+            String brandName = checkBox.findElement(By.cssSelector("input[aria-label]")).getDomAttribute("aria-label");
             while (value.contains("Unbranded")) {
                 checkBox = checkBoxes.get(randomIndex);
-                brandName = checkBox.findElement(By.cssSelector("input[aria-label]")).getAttribute("aria-label");
+                brandName = checkBox.findElement(By.cssSelector("input[aria-label]")).getDomAttribute("aria-label");
                 checkBox.click();
                 value = checkBox.getAttribute("href");
             }

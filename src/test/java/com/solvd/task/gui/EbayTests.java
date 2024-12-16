@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class EbayTests extends SeleniumGridTest {
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testSearchResults() {
         HomeEbayPage homePage = new HomeEbayPage(getDriver());
         Header header = homePage.getHeader();
@@ -25,7 +25,7 @@ public class EbayTests extends SeleniumGridTest {
         });
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testShoppingCartAdd() {
         List<String> productTitles = new ArrayList<>();
 
@@ -65,7 +65,7 @@ public class EbayTests extends SeleniumGridTest {
         return productPage.clickAddToCartButton();
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testShoppingCartRemove() {
         List<String> productTitles = new ArrayList<>();
 
@@ -79,7 +79,7 @@ public class EbayTests extends SeleniumGridTest {
         });
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testWrongLoginAttempt() {
         HomeEbayPage homePage = new HomeEbayPage(getDriver());
         Header header = homePage.getHeader();
@@ -109,7 +109,7 @@ public class EbayTests extends SeleniumGridTest {
         Assert.assertTrue(counter.get() > 10);
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testLanguageSwitchFunctionality() {
         HomeEbayPage homePage = new HomeEbayPage(getDriver());
         Header header = homePage.getHeader();
@@ -122,7 +122,7 @@ public class EbayTests extends SeleniumGridTest {
         });
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testEverythingElseCategoryShowResults() {
         HomeEbayPage homePage = new HomeEbayPage(getDriver());
         Header header = homePage.getHeader();
