@@ -11,7 +11,6 @@ import org.testng.annotations.Parameters;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.concurrent.TimeUnit;
 
 public abstract class SeleniumGridTest implements IGUITest {
 
