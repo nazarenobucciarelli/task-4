@@ -88,6 +88,7 @@ public class Header extends AbstractComponent {
     public int getCartNumber() {
         try {
             wait.until(ExpectedConditions.visibilityOf(cartNumber));
+            Thread.sleep(2000);
             int cartNum = Integer.parseInt(cartNumber.getText());
             logger.info("Cart number is: " + cartNum);
             return cartNum;
@@ -112,7 +113,7 @@ public class Header extends AbstractComponent {
 
     public LanguageSwitchModal clickLanguageMenuButton() {
         try{
-            wait.until(ExpectedConditions.elementToBeClickable(languageButton));
+            wait.until(ExpectedConditions.visibilityOf(languageButton));
             languageButton.click();
             logger.info("Language menu button clicked");
             return new LanguageSwitchModal(languageSwitchModal, driver);

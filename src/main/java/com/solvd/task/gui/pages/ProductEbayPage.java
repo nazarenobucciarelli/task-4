@@ -1,5 +1,6 @@
 package com.solvd.task.gui.pages;
 
+import com.solvd.task.gui.components.Dialog;
 import com.solvd.task.gui.components.SelectOptionModal;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,6 +22,9 @@ public class ProductEbayPage extends AbstractEbayPage {
 
     @FindBy(css = "span.listbox-button--expanded")
     private WebElement selectOptionModal;
+
+    @FindBy(css = "div.confirm-dialog__window")
+    private WebElement confirmationDialog;
 
     public ProductEbayPage(WebDriver driver) {
         super(driver);
@@ -80,6 +84,28 @@ public class ProductEbayPage extends AbstractEbayPage {
             return productName.getText();
         } catch (Exception e) {
             logger.error("Error getting product name", e);
+            return null;
+        }
+    }
+
+    public boolean isConfirmationDialogPresent() {
+        try {
+            boolean isDisplayed = confirmationDialog.isDisplayed();
+            logger.info("Confirmation dialog present");
+            return isDisplayed;
+        } catch (Exception e) {
+            logger.error("Confirmation dialog is not present", e);
+            return false;
+        }
+    }
+
+    public Dialog getConfirmationDialog() {
+        try {
+            Dialog dialog = new Dialog(confirmationDialog, driver);
+            logger.info("Confirmation dialog obtained");
+            return dialog;
+        } catch (Exception e) {
+            logger.error("Error getting confirmation dialog", e);
             return null;
         }
     }

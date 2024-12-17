@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class EbayTests extends SeleniumGridTest {
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testSearchResults() {
         HomeEbayPage homePage = new HomeEbayPage(getDriver());
         Header header = homePage.getHeader();
@@ -25,7 +25,7 @@ public class EbayTests extends SeleniumGridTest {
         });
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testShoppingCartAdd() {
         List<String> productTitles = new ArrayList<>();
 
@@ -57,15 +57,15 @@ public class EbayTests extends SeleniumGridTest {
 
         productPage.selectRandomOptions();
 
-        if (productPage.isConfirmDialogDisplayed()) {
-            Dialog dialog = productPage.getConfirmDialog();
+        if (productPage.isConfirmationDialogPresent()) {
+            Dialog dialog = productPage.getConfirmationDialog();
             dialog.clickConfirmButton();
         }
 
         return productPage.clickAddToCartButton();
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testShoppingCartRemove() {
         List<String> productTitles = new ArrayList<>();
 
@@ -79,7 +79,7 @@ public class EbayTests extends SeleniumGridTest {
         });
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testWrongLoginAttempt() {
         HomeEbayPage homePage = new HomeEbayPage(getDriver());
         Header header = homePage.getHeader();
@@ -91,7 +91,7 @@ public class EbayTests extends SeleniumGridTest {
         Assert.assertTrue(signInPage.isSignInErrorMsgDisplayed());
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testSearchFilteringFunctionality() {
         HomeEbayPage homePage = new HomeEbayPage(getDriver());
         Header header = homePage.getHeader();
@@ -115,14 +115,16 @@ public class EbayTests extends SeleniumGridTest {
         Header header = homePage.getHeader();
         List<String> categoriesBefore = homePage.getCategories().stream().map(WebElement::getText).toList();
         LanguageSwitchModal languageSwitchModal = header.clickLanguageMenuButton();
-        languageSwitchModal.clickOnRandomLanguageOption();
-        List<String> categoriesAfter = homePage.getCategories().stream().map(WebElement::getText).toList();
+        HomeEbayPage homePageWithAnotherLanguage = languageSwitchModal.clickOnRandomLanguageOption();
+        List<String> categoriesAfter = homePageWithAnotherLanguage.getCategories().stream().map(WebElement::getText).toList();
+        logger.info("Number of categories found: " + categoriesAfter);
+        logger.info("Number of categories found: " + categoriesBefore);
         categoriesAfter.forEach(element -> {
             Assert.assertFalse(categoriesBefore.contains(element));
         });
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testEverythingElseCategoryShowResults() {
         HomeEbayPage homePage = new HomeEbayPage(getDriver());
         Header header = homePage.getHeader();

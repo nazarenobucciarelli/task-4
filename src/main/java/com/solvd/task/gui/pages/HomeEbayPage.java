@@ -1,5 +1,6 @@
 package com.solvd.task.gui.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,14 +19,11 @@ public class HomeEbayPage extends AbstractEbayPage {
     }
 
     public List<WebElement> getCategories() {
-        if (categories == null) {
-            logger.info("No header categories found");
-            return null;
-        }
         List<WebElement> categoriesFiltered = categories.stream().filter(category -> category.isDisplayed()
                 && !category.getText().equals("Explore (New!)")).toList();
-        logger.info("Header categories found");
-        logger.info("Header categories size: " + categoriesFiltered.size());
+        wait.until(ExpectedConditions.visibilityOfAllElements(categoriesFiltered));
+        logger.info("Header categories found"); // FIX THIS
+        logger.info("Header categories size: {}", categoriesFiltered.size());
         return categoriesFiltered;
     }
 }
