@@ -1,6 +1,6 @@
 package com.solvd.task.gui.components;
 
-import com.solvd.task.gui.pages.CategoryEbayPage;
+import com.solvd.task.gui.pages.CategoryPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,12 +17,12 @@ public class ShopByCategoryModal extends AbstractComponent {
         super(root, driver);
     }
 
-    public CategoryEbayPage clickRandomCategory() {
+    public CategoryPage clickRandomCategory() {
         try {
             int randomIndex = new Random().nextInt(categories.size());
             categories.get(randomIndex).click();
             logger.info("Random Category Clicked");
-            return new CategoryEbayPage(driver);
+            return new CategoryPage(driver);
         } catch (Exception e) {
             logger.error("Error clicking on random category", e);
             return null;

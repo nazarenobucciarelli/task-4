@@ -32,7 +32,7 @@ public abstract class SeleniumGridTest implements IGUITest {
         WebDriver driver = new RemoteWebDriver(hubUrl, capabilities);
         driverThreadLocal.set(driver);
 
-        getDriver().get("https://ebay.com");
+        getDriver().get("https://www.m.ebay.co.uk");
     }
 
 

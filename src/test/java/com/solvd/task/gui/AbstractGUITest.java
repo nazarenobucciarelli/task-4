@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractGUITest implements IGUITest{
 
@@ -38,7 +39,7 @@ public abstract class AbstractGUITest implements IGUITest{
 
         driverThreadLocal.set(driver);
         getDriver().manage().window().maximize();
-        getDriver().get("https://www.ebay.com");
+        getDriver().get("https://www.m.ebay.co.uk");
     }
 
     @AfterMethod

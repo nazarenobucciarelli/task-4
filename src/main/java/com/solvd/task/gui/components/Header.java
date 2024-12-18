@@ -1,13 +1,15 @@
 package com.solvd.task.gui.components;
 
-import com.solvd.task.gui.pages.CategoryEbayPage;
-import com.solvd.task.gui.pages.SearchResultsEbayPage;
+import com.solvd.task.gui.pages.CategoryPage;
+import com.solvd.task.gui.pages.ProductListPage;
 import com.solvd.task.gui.pages.SignInPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.util.List;
 
 public class Header extends AbstractComponent {
 
@@ -20,8 +22,8 @@ public class Header extends AbstractComponent {
     @FindBy(css = "#gh-shop-a")
     private WebElement shopByCategoryButton;
 
-    @FindBy(id = "gh-cart-n")
-    private WebElement cartNumber;
+    @FindBy(id = "gh-minicart-hover")
+    private WebElement cartButton;
 
     @FindBy(css = "#gh-sbc-o")
     private WebElement modal;
@@ -29,14 +31,20 @@ public class Header extends AbstractComponent {
     @FindBy(xpath = "//span[@id='gh-ug']/a")
     private WebElement signInButton;
 
-    @FindBy(id = "gh-eb-Geo-a-default")
-    private WebElement languageButton;
-
-    @FindBy(id = "gh-eb-Geo-o")
-    private WebElement languageSwitchModal;
-
     @FindBy(id = "gh-cat")
-    private WebElement allCategoriesSelect;
+    private WebElement categoriesSelect;
+
+    @FindBy(id = "gh-as-a")
+    private WebElement advancedButton;
+
+    @FindBy(id = "gh-logo")
+    private WebElement logo;
+
+    @FindBy(xpath = "//span[@id='gh-ug']//a[contains(text(), 'register')]")
+    private WebElement registerButton;
+
+    @FindBy(id = "gh-eb-Alerts")
+    private WebElement notificationButton;
 
     public Header(WebElement root, WebDriver driver) {
         super(root, driver);
@@ -51,22 +59,22 @@ public class Header extends AbstractComponent {
         }
     }
 
-    public SearchResultsEbayPage clickSearchButton() {
+    public ProductListPage clickSearchButton() {
         try {
             searchButton.click();
             logger.info("Search button clicked");
-            return new SearchResultsEbayPage(driver);
+            return new ProductListPage(driver);
         } catch (Exception e) {
             logger.error("Error trying to click search button", e);
             return null;
         }
     }
 
-    public CategoryEbayPage clickSearchButtonByCategory() {
+    public CategoryPage clickSearchButtonByCategory() {
         try {
             searchButton.click();
             logger.info("Search button by category clicked");
-            return new CategoryEbayPage(driver);
+            return new CategoryPage(driver);
         } catch (Exception e) {
             logger.error("Error trying to click search button by category", e);
             return null;
@@ -85,19 +93,6 @@ public class Header extends AbstractComponent {
         }
     }
 
-    public int getCartNumber() {
-        try {
-            wait.until(ExpectedConditions.visibilityOf(cartNumber));
-            Thread.sleep(2000);
-            int cartNum = Integer.parseInt(cartNumber.getText());
-            logger.info("Cart number is: " + cartNum);
-            return cartNum;
-        } catch (Exception e) {
-            logger.info("Cart number is: 0");
-            return 0;
-        }
-    }
-
     public SignInPage clickSignInButton() {
         try {
             signInButton.click();
@@ -111,26 +106,28 @@ public class Header extends AbstractComponent {
         }
     }
 
-    public LanguageSwitchModal clickLanguageMenuButton() {
-        try{
-            wait.until(ExpectedConditions.visibilityOf(languageButton));
-            languageButton.click();
-            logger.info("Language menu button clicked");
-            return new LanguageSwitchModal(languageSwitchModal, driver);
+    public Select openAllCategories() {
+        try {
+            categoriesSelect.click();
+            logger.info("All categories opened");
+            return new Select(categoriesSelect, driver);
         } catch (Exception e) {
-            logger.error("Error trying to click language menu button", e);
+            logger.error("Error trying to open all categories", e);
             return null;
         }
     }
 
-    public Select clickAllCategoriesSelect() {
-        try{
-            allCategoriesSelect.click();
-            logger.info("All categories button clicked");
-            return new Select(allCategoriesSelect, driver);
+    public boolean areAllHeaderElementsDisplayed() {
+        try {
+            wait.until(ExpectedConditions.visibilityOfAllElements(
+                    List.of(signInButton, shopByCategoryButton, categoriesSelect,
+                            advancedButton, logo, registerButton, notificationButton, searchButton, searchBox, cartButton))
+            );
+            logger.info("All header elements displayed");
+            return true;
         } catch (Exception e) {
-            logger.error("Error trying to click all categories button", e);
-            return null;
+            logger.error("Error trying to display all header elements", e);
+            return false;
         }
     }
 

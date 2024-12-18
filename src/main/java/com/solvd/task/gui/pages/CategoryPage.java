@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class CategoryEbayPage extends AbstractEbayPage {
+public class CategoryPage extends AbstractEbayPage {
 
     @FindBy(css = "nav[role='navigation']")
     private WebElement nav;
@@ -14,7 +14,7 @@ public class CategoryEbayPage extends AbstractEbayPage {
     @FindBy(css = "li.brwrvr__item-card--list")
     private List<WebElement> items;
 
-    public CategoryEbayPage(WebDriver driver) {
+    public CategoryPage(WebDriver driver) {
         super(driver);
     }
 

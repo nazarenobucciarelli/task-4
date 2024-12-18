@@ -1,6 +1,6 @@
 package com.solvd.task.gui.components;
 
-import com.solvd.task.gui.pages.ShoppingCartEbayPage;
+import com.solvd.task.gui.pages.ShoppingCartPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,12 +16,12 @@ public class Dialog extends AbstractComponent {
         super(root, driver);
     }
 
-    public ShoppingCartEbayPage clickConfirmButton() {
+    public ShoppingCartPage clickConfirmButton() {
         try {
             confirmButton.click();
             logger.info("Confirm button clicked");
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".cart-summary-call-to-action")));
-            return new ShoppingCartEbayPage(driver);
+            return new ShoppingCartPage(driver);
         } catch (Exception e) {
             logger.error("Error occurred while clicking confirm button", e);
             return null;

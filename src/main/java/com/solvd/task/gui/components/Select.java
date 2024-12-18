@@ -1,10 +1,12 @@
 package com.solvd.task.gui.components;
 
+import com.solvd.task.gui.enums.Category;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Select extends AbstractComponent {
 
@@ -24,10 +26,17 @@ public class Select extends AbstractComponent {
         }
     }
 
-    public void clickOption(Integer index) {
+    public void clickOption(Category category) {
         try {
-            options.get(index).click();
-            logger.info("Selected option: " + options.get(index).getText());
+            Optional<WebElement> opt = options.stream()
+                    .filter(option -> option.getText().equals(category.getDisplayName()))
+                    .findFirst();
+            if (opt.isPresent()) {
+                opt.get().click();
+                logger.info("Selected option: " + category.getDisplayName());
+            } else {
+                throw new RuntimeException("Option not found");
+            }
         } catch (Exception e) {
             logger.error("Error while clicking random option: " + e);
         }

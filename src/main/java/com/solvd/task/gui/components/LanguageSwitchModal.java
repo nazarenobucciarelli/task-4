@@ -1,6 +1,6 @@
 package com.solvd.task.gui.components;
 
-import com.solvd.task.gui.pages.HomeEbayPage;
+import com.solvd.task.gui.pages.HomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,14 +17,14 @@ public class LanguageSwitchModal extends AbstractComponent {
         super(root, driver);
     }
 
-    public HomeEbayPage clickOnRandomLanguageOption() {
+    public HomePage clickOnRandomLanguageOption() {
         try {
             wait.until(ExpectedConditions.visibilityOfAllElements(languageOption));
             WebElement firstOption = languageOption.get(0);
             String lang =  firstOption.getDomAttribute("lang");
             firstOption.click();
             logger.info("Language option clicked: " + lang);
-            return new HomeEbayPage(driver);
+            return new HomePage(driver);
         } catch (Exception e) {
             logger.error("Error while clicking random language option", e);
             return null;

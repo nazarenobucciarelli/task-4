@@ -8,12 +8,12 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ShoppingCartEbayPage extends AbstractEbayPage {
+public class ShoppingCartPage extends AbstractEbayPage {
 
     @FindBy(css = "div.cart-bucket")
     private List<WebElement> cartProducts;
 
-    public ShoppingCartEbayPage(WebDriver driver) {
+    public ShoppingCartPage(WebDriver driver) {
         super(driver);
     }
 

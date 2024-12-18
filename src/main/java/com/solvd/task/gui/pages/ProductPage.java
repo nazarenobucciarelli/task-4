@@ -2,6 +2,7 @@ package com.solvd.task.gui.pages;
 
 import com.solvd.task.gui.components.Dialog;
 import com.solvd.task.gui.components.SelectOptionModal;
+import com.solvd.task.gui.components.ShoppingCartOverlay;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,7 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
-public class ProductEbayPage extends AbstractEbayPage {
+public class ProductPage extends AbstractEbayPage {
 
     @FindBy(css = "div.x-atc-action")
     private WebElement addToCartButton;
@@ -26,15 +27,20 @@ public class ProductEbayPage extends AbstractEbayPage {
     @FindBy(css = "div.confirm-dialog__window")
     private WebElement confirmationDialog;
 
-    public ProductEbayPage(WebDriver driver) {
+    @FindBy(css = "div[data-testid='ux-overlay'][aria-hidden='false']")
+    private WebElement overlay;
+
+    public ProductPage(WebDriver driver) {
         super(driver);
     }
 
     public void selectRandomOptions() {
         try {
             for (WebElement button : selectOptionButtons) {
+                wait.until(ExpectedConditions.visibilityOf(button));
                 SelectOptionModal selectModal = clickOptionButton(button);
                 selectModal.selectRandomOption();
+                wait.until(ExpectedConditions.invisibilityOf(selectOptionModal));
                 logger.info("Random option selected");
             }
         } catch (Exception e) {
@@ -55,11 +61,12 @@ public class ProductEbayPage extends AbstractEbayPage {
         }
     }
 
-    public ShoppingCartEbayPage clickAddToCartButton() {
+    public ShoppingCartOverlay clickAddToCartButton() {
         try {
             addToCartButton.click();
             logger.info("Add to cart button clicked");
-            return new ShoppingCartEbayPage(driver);
+            wait.until(ExpectedConditions.visibilityOf(overlay));
+            return new ShoppingCartOverlay(overlay,driver);
         } catch (Exception e) {
             logger.error("Error occurred while clicking add to cart button", e);
             return null;
@@ -101,6 +108,7 @@ public class ProductEbayPage extends AbstractEbayPage {
 
     public Dialog getConfirmationDialog() {
         try {
+            wait.until(ExpectedConditions.visibilityOf(confirmationDialog));
             Dialog dialog = new Dialog(confirmationDialog, driver);
             logger.info("Confirmation dialog obtained");
             return dialog;
