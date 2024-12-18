@@ -66,7 +66,7 @@ public class SignInPage extends AbstractPage{
 
     public boolean isSignInErrorMsgDisplayed() {
         try {
-            Thread.sleep(10000); // to solve captcha
+            wait.until(ExpectedConditions.invisibilityOf(getCaptcha())); // to solve captcha
             signInErrorMsg.isDisplayed();
             logger.info("Sign in error msg displayed");
             return true;

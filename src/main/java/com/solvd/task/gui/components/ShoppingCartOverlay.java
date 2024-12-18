@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.solvd.task.gui.pages.AbstractPage.getCaptcha;
+
 public class ShoppingCartOverlay extends AbstractComponent {
 
     @FindBy(css = "a[data-testid=\"ux-call-to-action\"]")
@@ -31,7 +33,7 @@ public class ShoppingCartOverlay extends AbstractComponent {
                 throw new RuntimeException("See in basket button not found");
             }
             logger.info("See on basket button clicked");
-            Thread.sleep(10000); // To solve captcha
+            wait.until(ExpectedConditions.invisibilityOf(getCaptcha())); // to solve captcha
             return new ShoppingCartPage(driver);
         } catch (Exception e) {
             logger.error("Couldn't click on basket button", e);

@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
+import static com.solvd.task.gui.pages.AbstractPage.getCaptcha;
+
 public class Header extends AbstractComponent {
 
     @FindBy(css = "#gh-ac")
@@ -97,7 +99,7 @@ public class Header extends AbstractComponent {
         try {
             signInButton.click();
             logger.info("Sign in button clicked");
-            Thread.sleep(20000); // To solve captcha
+            wait.until(ExpectedConditions.invisibilityOf(getCaptcha())); // to solve captcha
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("userid")));
             return new SignInPage(driver);
         } catch (Exception e) {

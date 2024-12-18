@@ -10,6 +10,7 @@ public abstract class AbstractEbayPage extends AbstractPage {
     @FindBy(css = "header")
     protected WebElement header;
 
+
     public AbstractEbayPage(WebDriver driver) {
         super(driver);
     }

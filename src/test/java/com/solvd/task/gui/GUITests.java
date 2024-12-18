@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class GUITests extends SeleniumGridTest {
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testSearchResults() {
         HomePage homePage = new HomePage(getDriver());
         Header header = homePage.getHeader();
@@ -26,7 +26,7 @@ public class GUITests extends SeleniumGridTest {
         });
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testShoppingCartAdd() {
         List<String> productTitles = new ArrayList<>();
 
@@ -61,7 +61,7 @@ public class GUITests extends SeleniumGridTest {
         return overlay.clickOnSeeInBasketButton();
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testShoppingCartRemove() {
         List<String> productTitles = new ArrayList<>();
 
@@ -74,7 +74,7 @@ public class GUITests extends SeleniumGridTest {
         });
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testWrongLoginAttempt() {
         HomePage homePage = new HomePage(getDriver());
         Header header = homePage.getHeader();
@@ -104,14 +104,14 @@ public class GUITests extends SeleniumGridTest {
         Assert.assertTrue(counter.get() > 10);
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testAreHeaderElementsDisplayed() {
         HomePage homePage = new HomePage(getDriver());
         Header header = homePage.getHeader();
         Assert.assertTrue(header.areAllHeaderElementsDisplayed());
     }
 
-    @Test(enabled = false, dataProvider = "categories", dataProviderClass = DataProviders.class)
+    @Test(enabled = true, dataProvider = "categories", dataProviderClass = DataProviders.class)
     public void testCategoryShowResults(Category category) {
         HomePage homePage = new HomePage(getDriver());
         Header header = homePage.getHeader();

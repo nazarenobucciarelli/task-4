@@ -17,4 +17,4 @@ After, open another terminal and run the following:
 
 After these two steps, you have to run the "gui-suite.xml" suite file, inside src/test/resources/suites.
 
-Please, notice that login tests are disabled since they have a Thread.sleep which breaks the rest of tests. This was used to solve the captcha.
+While running, please solve the captchas that will show up during the tests execution.

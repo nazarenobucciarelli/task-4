@@ -3,6 +3,7 @@ package com.solvd.task.gui.pages;
 import com.solvd.task.gui.components.Dialog;
 import com.solvd.task.gui.components.SelectOptionModal;
 import com.solvd.task.gui.components.ShoppingCartOverlay;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -75,6 +76,8 @@ public class ProductPage extends AbstractEbayPage {
 
     public boolean isAddToCartButtonPresent() {
         try {
+            wait.until(ExpectedConditions.visibilityOf(addToCartButton));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", addToCartButton);
             if (addToCartButton.isDisplayed()) {
                 logger.info("Add to cart button present");
             }

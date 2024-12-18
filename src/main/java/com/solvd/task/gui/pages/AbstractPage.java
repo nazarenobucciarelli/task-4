@@ -1,6 +1,8 @@
 package com.solvd.task.gui.pages;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -15,9 +17,16 @@ public class AbstractPage {
 
     protected static final Logger logger = LoggerFactory.getLogger(AbstractPage.class);
 
+    @FindBy(xpath = "//iframe[@data-hcaptcha-response]")
+    public static WebElement captcha;
+
     public AbstractPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         PageFactory.initElements(driver, this);
+    }
+
+    public static WebElement getCaptcha() {
+        return captcha;
     }
 }
