@@ -8,12 +8,12 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 import java.util.Optional;
 
-public class Select extends AbstractComponent {
+public class SelectComponent extends AbstractComponent {
 
     @FindBy(css = "option")
     private List<WebElement> options;
 
-    public Select(WebElement root, WebDriver driver) {
+    public SelectComponent(WebElement root, WebDriver driver) {
         super(root, driver);
     }
 

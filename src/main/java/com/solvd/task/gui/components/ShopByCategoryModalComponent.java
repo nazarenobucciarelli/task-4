@@ -8,12 +8,12 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 import java.util.Random;
 
-public class ShopByCategoryModal extends AbstractComponent {
+public class ShopByCategoryModalComponent extends AbstractComponent {
 
     @FindBy(css = ".scnd")
     private List<WebElement> categories;
 
-    public ShopByCategoryModal(WebElement root, WebDriver driver) {
+    public ShopByCategoryModalComponent(WebElement root, WebDriver driver) {
         super(root, driver);
     }
 

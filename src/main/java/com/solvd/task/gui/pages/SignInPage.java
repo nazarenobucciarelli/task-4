@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class SignInPage extends AbstractPage{
+public class SignInPage extends AbstractPage {
 
     @FindBy(id = "userid")
     private WebElement userId;
@@ -36,7 +36,7 @@ public class SignInPage extends AbstractPage{
     }
 
     public void clickSignInContinueBtn() {
-        try{
+        try {
             signInContinueBtn.click();
             logger.info("Continue button clicked");
             wait.until(ExpectedConditions.visibilityOf(passwordInput));
@@ -58,7 +58,9 @@ public class SignInPage extends AbstractPage{
         try {
             signInBtn.click();
             logger.info("Sign in button clicked");
-            wait.until(ExpectedConditions.visibilityOf(signInErrorMsg));
+            if (getCaptcha() != null) {
+                wait.until(ExpectedConditions.invisibilityOf(getCaptcha())); // to solve captcha
+            }
         } catch (Exception e) {
             logger.error("Error while clicking Sign in button: " + e);
         }
@@ -66,7 +68,7 @@ public class SignInPage extends AbstractPage{
 
     public boolean isSignInErrorMsgDisplayed() {
         try {
-            wait.until(ExpectedConditions.invisibilityOf(getCaptcha())); // to solve captcha
+            wait.until(ExpectedConditions.visibilityOf(signInErrorMsg));
             signInErrorMsg.isDisplayed();
             logger.info("Sign in error msg displayed");
             return true;

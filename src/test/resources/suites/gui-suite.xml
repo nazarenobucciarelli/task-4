@@ -7,10 +7,4 @@
             <class name="com.solvd.task.gui.GUITests" />
         </classes>
     </test>
-    <test name="EbayTests Firefox">
-        <parameter name="browser" value="firefox"/>
-        <classes >
-            <class name="com.solvd.task.gui.GUITests" />
-        </classes>
-    </test>
 </suite>

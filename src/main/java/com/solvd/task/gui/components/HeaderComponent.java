@@ -13,7 +13,7 @@ import java.util.List;
 
 import static com.solvd.task.gui.pages.AbstractPage.getCaptcha;
 
-public class Header extends AbstractComponent {
+public class HeaderComponent extends AbstractComponent {
 
     @FindBy(css = "#gh-ac")
     private WebElement searchBox;
@@ -48,7 +48,7 @@ public class Header extends AbstractComponent {
     @FindBy(id = "gh-eb-Alerts")
     private WebElement notificationButton;
 
-    public Header(WebElement root, WebDriver driver) {
+    public HeaderComponent(WebElement root, WebDriver driver) {
         super(root, driver);
     }
 
@@ -83,12 +83,12 @@ public class Header extends AbstractComponent {
         }
     }
 
-    public ShopByCategoryModal clickShopByCategoryButton() {
+    public ShopByCategoryModalComponent clickShopByCategoryButton() {
         try {
             shopByCategoryButton.click();
             logger.info("Shop button clicked");
             wait.until(ExpectedConditions.visibilityOf(modal));
-            return new ShopByCategoryModal(modal, driver);
+            return new ShopByCategoryModalComponent(modal, driver);
         } catch (Exception e) {
             logger.error("Error trying to click shop by category button", e);
             return null;
@@ -99,7 +99,9 @@ public class Header extends AbstractComponent {
         try {
             signInButton.click();
             logger.info("Sign in button clicked");
-            wait.until(ExpectedConditions.invisibilityOf(getCaptcha())); // to solve captcha
+            if (getCaptcha() != null) {
+                wait.until(ExpectedConditions.invisibilityOf(getCaptcha())); // to solve captcha
+            }
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("userid")));
             return new SignInPage(driver);
         } catch (Exception e) {
@@ -108,11 +110,11 @@ public class Header extends AbstractComponent {
         }
     }
 
-    public Select openAllCategories() {
+    public SelectComponent openAllCategories() {
         try {
             categoriesSelect.click();
             logger.info("All categories opened");
-            return new Select(categoriesSelect, driver);
+            return new SelectComponent(categoriesSelect, driver);
         } catch (Exception e) {
             logger.error("Error trying to open all categories", e);
             return null;

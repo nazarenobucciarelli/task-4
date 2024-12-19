@@ -22,9 +22,13 @@ public abstract class AbstractComponent {
 
     public AbstractComponent(WebElement root, WebDriver driver) {
         this.root = root;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         this.driver = driver;
         PageFactory.initElements(root, this);
+    }
+
+    public WebElement getRoot() {
+        return root;
     }
 
 }

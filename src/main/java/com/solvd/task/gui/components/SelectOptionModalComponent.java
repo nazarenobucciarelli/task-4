@@ -7,13 +7,13 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 import java.util.Random;
 
-public class SelectOptionModal extends AbstractComponent {
+public class SelectOptionModalComponent extends AbstractComponent {
 
     @FindBy(css = "div[role='listbox'] div[role='option']:not([aria-disabled])")
     private List<WebElement> availableOptions;
 
 
-    public SelectOptionModal(WebElement root, WebDriver driver) {
+    public SelectOptionModalComponent(WebElement root, WebDriver driver) {
         super(root, driver);
     }
 

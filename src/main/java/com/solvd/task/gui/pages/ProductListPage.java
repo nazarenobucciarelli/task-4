@@ -1,11 +1,13 @@
 package com.solvd.task.gui.pages;
 
-import com.solvd.task.gui.components.Product;
+import com.solvd.task.gui.components.ProductListComponent;
 import com.solvd.task.gui.components.SearchResultsSideBar;
+import com.solvd.task.gui.models.Product;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
@@ -15,28 +17,35 @@ import java.util.stream.Collectors;
 
 public class ProductListPage extends AbstractEbayPage {
 
-    @FindBy(css = ".srp-results .s-item")
-    private List<WebElement> productElements;
+    private WebDriver driver;
+
+    @FindBy(css = ".srp-results .s-item .s-item__image")
+    private List<ProductListComponent> productElements;
 
     @FindBy(css = "div.srp-rail__left")
-    private WebElement sideBar;
+    private WebElement leftSideBar;
 
     public ProductListPage(WebDriver driver) {
         super(driver);
-        wait.until(ExpectedConditions.visibilityOfAllElements(productElements));
+        PageFactory.initElements(this.driver, this);
     }
 
     public List<Product> getProducts() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return productElements.stream()
-                .map(product -> new Product(product, driver))
+                .map(product -> new Product(product.getTitle(),product.getPrice()))
                 .collect(Collectors.toList());
     }
 
     public ProductPage clickOnRandomProduct() {
         try {
-            wait.until(webDriver -> !productElements.isEmpty() && productElements.get(0).isDisplayed());
+            wait.until(webDriver -> !productElements.isEmpty() && productElements.get(0).getRoot().isDisplayed());
             int randomIndex = new Random().nextInt(productElements.size());
-            productElements.get(randomIndex).click();
+            productElements.get(randomIndex).getRoot().click();
             logger.info("Clicked on Random Product");
 
             Set<String> windowHandles = driver.getWindowHandles();
@@ -57,7 +66,7 @@ public class ProductListPage extends AbstractEbayPage {
         }
     }
 
-    public SearchResultsSideBar getSideBar() {
-            return new SearchResultsSideBar(sideBar, driver);
+    public SearchResultsSideBar getLeftSideBar() {
+            return new SearchResultsSideBar(leftSideBar, driver);
     }
 }

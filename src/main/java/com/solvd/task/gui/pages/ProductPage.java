@@ -1,14 +1,16 @@
 package com.solvd.task.gui.pages;
 
-import com.solvd.task.gui.components.Dialog;
-import com.solvd.task.gui.components.SelectOptionModal;
-import com.solvd.task.gui.components.ShoppingCartOverlay;
+import com.solvd.task.gui.components.DialogComponent;
+import com.solvd.task.gui.components.SelectOptionModalComponent;
+import com.solvd.task.gui.components.ShoppingCartOverlayComponent;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class ProductPage extends AbstractEbayPage {
@@ -39,7 +41,7 @@ public class ProductPage extends AbstractEbayPage {
         try {
             for (WebElement button : selectOptionButtons) {
                 wait.until(ExpectedConditions.visibilityOf(button));
-                SelectOptionModal selectModal = clickOptionButton(button);
+                SelectOptionModalComponent selectModal = clickOptionButton(button);
                 selectModal.selectRandomOption();
                 wait.until(ExpectedConditions.invisibilityOf(selectOptionModal));
                 logger.info("Random option selected");
@@ -49,25 +51,24 @@ public class ProductPage extends AbstractEbayPage {
         }
     }
 
-    public SelectOptionModal clickOptionButton(WebElement button) {
+    public SelectOptionModalComponent clickOptionButton(WebElement button) {
         try {
             wait.until(ExpectedConditions.elementToBeClickable(button));
             button.click();
             logger.info("Options button clicked");
             wait.until(ExpectedConditions.visibilityOf(selectOptionModal));
-            return new SelectOptionModal(selectOptionModal, driver);
+            return new SelectOptionModalComponent(selectOptionModal, driver);
         } catch (Exception e) {
             logger.error("Error occurred while clicking option button", e);
             return null;
         }
     }
 
-    public ShoppingCartOverlay clickAddToCartButton() {
+    public ShoppingCartOverlayComponent clickAddToCartButton() {
         try {
             addToCartButton.click();
             logger.info("Add to cart button clicked");
-            wait.until(ExpectedConditions.visibilityOf(overlay));
-            return new ShoppingCartOverlay(overlay,driver);
+            return new ShoppingCartOverlayComponent(overlay, driver);
         } catch (Exception e) {
             logger.error("Error occurred while clicking add to cart button", e);
             return null;
@@ -98,26 +99,26 @@ public class ProductPage extends AbstractEbayPage {
         }
     }
 
-    public boolean isConfirmationDialogPresent() {
+    public DialogComponent getConfirmationDialog() {
         try {
-            boolean isDisplayed = confirmationDialog.isDisplayed();
-            logger.info("Confirmation dialog present");
-            return isDisplayed;
-        } catch (Exception e) {
-            logger.error("Confirmation dialog is not present", e);
-            return false;
-        }
-    }
-
-    public Dialog getConfirmationDialog() {
-        try {
-            wait.until(ExpectedConditions.visibilityOf(confirmationDialog));
-            Dialog dialog = new Dialog(confirmationDialog, driver);
+            DialogComponent dialogComponent = new DialogComponent(confirmationDialog, driver);
             logger.info("Confirmation dialog obtained");
-            return dialog;
+            return dialogComponent;
         } catch (Exception e) {
             logger.error("Error getting confirmation dialog", e);
             return null;
+        }
+    }
+
+    public boolean isConfirmationDialogDisplayed() {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.visibilityOf(confirmationDialog));
+            logger.info("Confirmation dialog displayed");
+            return true;
+        } catch (Exception e) {
+            logger.error("Confirmation dialog is not displayed");
+            return false;
         }
     }
 }

@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class CartProduct extends AbstractComponent{
+public class CartProductComponent extends AbstractComponent{
 
     @FindBy(css = "button[data-test-id='cart-remove-item']")
     private WebElement removeButton;
@@ -13,7 +13,7 @@ public class CartProduct extends AbstractComponent{
     @FindBy(css = ".item-title a")
     private WebElement title;
 
-    public CartProduct(WebElement root, WebDriver driver) {
+    public CartProductComponent(WebElement root, WebDriver driver) {
         super(root, driver);
     }
 
@@ -30,7 +30,7 @@ public class CartProduct extends AbstractComponent{
     public String getTitle() {
         try{
             String titleText = title.getText();
-            logger.info("Title text is: " + titleText);
+            logger.info("Title text is: {}", titleText);
             return titleText;
         } catch (Exception e) {
             logger.error("Error while getting title", e);

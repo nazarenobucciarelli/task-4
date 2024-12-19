@@ -8,16 +8,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static com.solvd.task.gui.pages.AbstractPage.getCaptcha;
 
-public class ShoppingCartOverlay extends AbstractComponent {
+public class ShoppingCartOverlayComponent extends AbstractComponent {
 
     @FindBy(css = "a[data-testid=\"ux-call-to-action\"]")
     List<WebElement> actionButtons;
 
-    public ShoppingCartOverlay(WebElement root, WebDriver driver) {
+    public ShoppingCartOverlayComponent(WebElement root, WebDriver driver) {
         super(root, driver);
     }
 
@@ -33,7 +32,10 @@ public class ShoppingCartOverlay extends AbstractComponent {
                 throw new RuntimeException("See in basket button not found");
             }
             logger.info("See on basket button clicked");
-            wait.until(ExpectedConditions.invisibilityOf(getCaptcha())); // to solve captcha
+            ;
+            if (getCaptcha() != null) {
+                wait.until(ExpectedConditions.invisibilityOf(getCaptcha())); // to solve captcha
+            }
             return new ShoppingCartPage(driver);
         } catch (Exception e) {
             logger.error("Couldn't click on basket button", e);

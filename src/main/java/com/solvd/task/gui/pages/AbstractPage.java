@@ -27,6 +27,14 @@ public class AbstractPage {
     }
 
     public static WebElement getCaptcha() {
-        return captcha;
+        try {
+            if (captcha.isDisplayed()) {
+                logger.info("Captcha is visible");
+            }
+            return captcha;
+        } catch (Exception e) {
+            logger.info("Captcha is not visible :)");
+            return null;
+        }
     }
 }

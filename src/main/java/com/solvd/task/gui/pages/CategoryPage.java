@@ -1,10 +1,13 @@
 package com.solvd.task.gui.pages;
 
+import com.solvd.task.gui.components.ProductCategoryComponent;
+import com.solvd.task.gui.models.Product;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CategoryPage extends AbstractEbayPage {
 
@@ -12,7 +15,7 @@ public class CategoryPage extends AbstractEbayPage {
     private WebElement nav;
 
     @FindBy(css = "li.brwrvr__item-card--list")
-    private List<WebElement> items;
+    private List<ProductCategoryComponent> items;
 
     public CategoryPage(WebDriver driver) {
         super(driver);
@@ -22,14 +25,10 @@ public class CategoryPage extends AbstractEbayPage {
         return nav.isDisplayed();
     }
 
-    public List<WebElement> getItems() {
-        try{
-            List<WebElement> items = this.items;
-            logger.info("Number of items displayed: " + items.size());
-            return items;
-        } catch (Exception e){
-            logger.error("Error while getting items displayed: ", e);
-            return null;
-        }
+    public List<Product> getItems() {
+        return items.stream()
+                .map(productCategoryComponent ->
+                        new Product(productCategoryComponent.getName(), productCategoryComponent.getPrice()))
+                .collect(Collectors.toList());
     }
 }
