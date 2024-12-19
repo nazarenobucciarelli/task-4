@@ -1,51 +1,53 @@
 package com.solvd.task.gui.pages;
 
-import com.solvd.task.gui.components.ProductListComponent;
-import com.solvd.task.gui.components.SearchResultsSideBar;
+import com.solvd.task.gui.components.SearchResultsLeftSideBar;
 import com.solvd.task.gui.models.Product;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class ProductListPage extends AbstractEbayPage {
 
-    private WebDriver driver;
-
-    @FindBy(css = ".srp-results .s-item .s-item__image")
-    private List<ProductListComponent> productElements;
+    @FindBy(css = ".srp-results .s-item .s-item__wrapper")
+    private List<WebElement> productElements;
 
     @FindBy(css = "div.srp-rail__left")
     private WebElement leftSideBar;
 
     public ProductListPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(this.driver, this);
+        wait.until(ExpectedConditions.visibilityOfAllElements(productElements));
     }
 
     public List<Product> getProducts() {
         try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            wait.until(ExpectedConditions.visibilityOfAllElements(productElements));
+            List<Product> products = productElements.stream()
+                    .map(product -> new Product(
+                            product.findElement(By.cssSelector(".s-item__title")).getText(),
+                            product.findElement(By.cssSelector(".s-item__price")).getText()
+                    ))
+                    .toList();
+            logger.info("Products found");
+            return products;
+        } catch (Exception e) {
+            logger.error("Error while getting products", e);
+            return Collections.emptyList();
         }
-        return productElements.stream()
-                .map(product -> new Product(product.getTitle(),product.getPrice()))
-                .collect(Collectors.toList());
     }
 
     public ProductPage clickOnRandomProduct() {
         try {
-            wait.until(webDriver -> !productElements.isEmpty() && productElements.get(0).getRoot().isDisplayed());
+            wait.until(webDriver -> !productElements.isEmpty() && productElements.get(0).isDisplayed());
             int randomIndex = new Random().nextInt(productElements.size());
-            productElements.get(randomIndex).getRoot().click();
+            productElements.get(randomIndex).click();
             logger.info("Clicked on Random Product");
 
             Set<String> windowHandles = driver.getWindowHandles();
@@ -66,7 +68,7 @@ public class ProductListPage extends AbstractEbayPage {
         }
     }
 
-    public SearchResultsSideBar getLeftSideBar() {
-            return new SearchResultsSideBar(leftSideBar, driver);
+    public SearchResultsLeftSideBar getLeftSideBar() {
+        return new SearchResultsLeftSideBar(leftSideBar, driver);
     }
 }

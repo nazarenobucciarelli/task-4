@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
-public class SearchResultsSideBar extends AbstractComponent {
+public class SearchResultsLeftSideBar extends AbstractComponent {
 
     @FindBy(css = "ul.x-refine__left__nav li ul.x-refine__left__nav > li")
     private List<WebElement> filterGroups;
 
-    public SearchResultsSideBar(WebElement root, WebDriver driver) {
+    public SearchResultsLeftSideBar(WebElement root, WebDriver driver) {
         super(root, driver);
     }
 

@@ -26,33 +26,33 @@ public class GUITests extends BaseTest {
         });
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testShoppingCartAdd() {
         ShoppingCartPage shoppingCartPage = addProductToShoppingCart("t-shirts");
-        Assert.assertEquals(shoppingCartPage.getProducts().size(), 1, "There should be one product");
+        Assert.assertEquals(shoppingCartPage.getCartProducts().size(), 1, "There should be one product");
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testShoppingCartRemove() {
         ShoppingCartPage shoppingCartPage = addProductToShoppingCart("t-shirt");
         shoppingCartPage.getCartProducts().forEach(CartProductComponent::clickRemoveButton);
-        Assert.assertEquals(shoppingCartPage.getProducts().size(), 0, "There should be 0 products");
+        Assert.assertEquals(shoppingCartPage.getCartProducts().size(), 0, "There should be 0 products");
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testWrongLoginAttempt() {
         SignInPage signInPage = login("invalidUserId", "invalidPassword");
         Assert.assertTrue(signInPage.isSignInErrorMsgDisplayed(), "Sign in error message was not displayed");
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testSearchFilteringFunctionality() {
         HomePage homePage = new HomePage(getDriver());
         HeaderComponent headerComponent = homePage.getHeader();
         headerComponent.typeSearchBox("guitars");
         ProductListPage productListPage = headerComponent.clickSearchButton();
-        SearchResultsSideBar searchResultsSideBar = productListPage.getLeftSideBar();
-        String brandName = searchResultsSideBar.selectRandomBrand();
+        SearchResultsLeftSideBar searchResultsLeftSideBar = productListPage.getLeftSideBar();
+        String brandName = searchResultsLeftSideBar.selectRandomBrand();
         AtomicInteger counter = new AtomicInteger();
         productListPage.getProducts().forEach(productListComponent -> {
             if (productListComponent.getTitle().toLowerCase().contains(brandName.toLowerCase())) {
@@ -64,22 +64,23 @@ public class GUITests extends BaseTest {
                 "was lower than 10");
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testAreHeaderElementsDisplayed() {
         HomePage homePage = new HomePage(getDriver());
         HeaderComponent headerComponent = homePage.getHeader();
         Assert.assertTrue(headerComponent.areAllHeaderElementsDisplayed(), "Not all header elements were displayed");
     }
 
-    @Test(enabled = false, dataProvider = "categories", dataProviderClass = DataProviders.class)
+    @Test(enabled = true, dataProvider = "categories", dataProviderClass = DataProviders.class)
     public void testCategoryShowResults(Category category) {
         HomePage homePage = new HomePage(getDriver());
         HeaderComponent headerComponent = homePage.getHeader();
         SelectComponent selectComponent = headerComponent.openAllCategories();
         selectComponent.clickOption(category);
         CategoryPage categoryPage = headerComponent.clickSearchButtonByCategory();
-        Assert.assertFalse(categoryPage.getItems().isEmpty(), "Category " + category.getDisplayName() +
+        Assert.assertFalse(categoryPage.getProducts().isEmpty(), "Category " + category.getDisplayName() +
                 " didn't show items");
+        logger.info("Number of products found in category: {}", categoryPage.getProducts().size());
     }
 
     // Helper methods

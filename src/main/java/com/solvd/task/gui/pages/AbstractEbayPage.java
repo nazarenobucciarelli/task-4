@@ -4,16 +4,15 @@ import com.solvd.task.gui.components.HeaderComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-public abstract class AbstractEbayPage {
-    private WebDriver driver;
+public abstract class AbstractEbayPage extends AbstractPage {
 
     @FindBy(css = "header")
     protected WebElement header;
 
+
     public AbstractEbayPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
 
     public HeaderComponent getHeader() {

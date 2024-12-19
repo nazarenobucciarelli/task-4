@@ -9,7 +9,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 
 import java.time.LocalDateTime;
-import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractGUITest implements IGUITest{
 

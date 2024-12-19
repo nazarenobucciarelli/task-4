@@ -34,7 +34,7 @@ public class ProductListComponent extends AbstractComponent {
             logger.info("Price  is: {}", priceText);
             return priceText;
         } catch (Exception e) {
-            logger.error("Error while getting Price", e);
+            logger.error("Error while getting price", e);
             return null;
         }
     }

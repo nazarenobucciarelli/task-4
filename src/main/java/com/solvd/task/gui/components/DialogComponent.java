@@ -4,6 +4,7 @@ import com.solvd.task.gui.pages.ShoppingCartPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class DialogComponent extends AbstractComponent {
 
@@ -14,14 +15,13 @@ public class DialogComponent extends AbstractComponent {
         super(root, driver);
     }
 
-    public ShoppingCartPage clickConfirmButton() {
+    public void clickConfirmButton() {
         try {
+            wait.until(ExpectedConditions.visibilityOf(confirmButton));
             confirmButton.click();
             logger.info("Confirm button clicked");
-            return new ShoppingCartPage(driver);
         } catch (Exception e) {
             logger.error("Error occurred while clicking confirm button", e);
-            return null;
         }
     }
 

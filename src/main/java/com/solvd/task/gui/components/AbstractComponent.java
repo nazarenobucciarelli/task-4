@@ -26,9 +26,4 @@ public abstract class AbstractComponent {
         this.driver = driver;
         PageFactory.initElements(root, this);
     }
-
-    public WebElement getRoot() {
-        return root;
-    }
-
 }

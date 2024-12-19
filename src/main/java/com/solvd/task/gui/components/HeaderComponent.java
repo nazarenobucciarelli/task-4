@@ -55,9 +55,9 @@ public class HeaderComponent extends AbstractComponent {
     public void typeSearchBox(String text) {
         try {
             searchBox.sendKeys(text);
-            logger.info("Search box entered: " + text);
+            logger.info("Search box entered: {}", text);
         } catch (Exception e) {
-            logger.error("Error while typing search box: " + e);
+            logger.error("Error while typing search box: {}", String.valueOf(e));
         }
     }
 
